@@ -1,26 +1,36 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using UnityEditor;
+using Models;
+using Proyecto26;
 using System.Collections.Generic;
-using UnityEngine;
-using Firebase.Database;
+using UnityEngine.Networking;
+
 
 public class FirebaseTest : MonoBehaviour
 {
-    DatabaseReference databaseRef;
+    //test variables
+    public string username;
+    public int userScore;
 
     private void Awake()
     {
-        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        databaseRef.Child("test").SetValueAsync("test!");
+        PostToDatabase();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TestUploadData()
     {
         
     }
+
+    private void PostToDatabase()
+    {
+        RestClient.Post("https://ip-asg3-y2s2-default-rtdb.firebaseio.com/.json", new User("test", 5));
+    }
+
 }
