@@ -28,7 +28,7 @@ public class FirebaseManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetDatabaseIds();
+        
     }
 
     //example function for posting data to database
@@ -41,7 +41,7 @@ public class FirebaseManager : MonoBehaviour
     private void GetDatabaseIds() 
     {
         Debug.Log("Getting from Database");
-        RestClient.Get(restLink + "/users.json").Then(response =>
+        RestClient.Get(restLink + "/users.json?auth=" + idToken).Then(response =>
         {
             fsData userData = fsJsonParser.Parse(response.Text); //converts text into json
             Debug.Log(userData);
@@ -65,7 +65,7 @@ public class FirebaseManager : MonoBehaviour
                 localId = response.localId;
 
                 //Create account in the RealtimeDb from inputs
-                string link = restLink + "/users/" + localId + ".json";
+                string link = restLink + "/users/" + localId + ".json?auth=" + idToken;
                 User newUser = new User(email, username, localId);
                 RestClient.Put(link, newUser);
             }
