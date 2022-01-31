@@ -16,8 +16,7 @@ GameObject:
   - component: {fileID: 4886088531773595545}
   - component: {fileID: 4886088531773591652}
   - component: {fileID: 4886088531773591654}
-  - component: {fileID: 7925441142702164644}
-  - component: {fileID: 7934605035786118533}
+  - component: {fileID: 5946074626675349577}
   m_Layer: 0
   m_Name: Humidifier2
   m_TagString: Untagged
@@ -255,19 +254,7 @@ MonoBehaviour:
   ScaleStopped:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7925441142702164644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4886088531773595544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3578dd336652bea4b93cf10f4e5f3296, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7934605035786118533
+--- !u!114 &5946074626675349577
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -279,3 +266,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87faa5228a620ca40b752f938192f739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameThisObject: Humidifier

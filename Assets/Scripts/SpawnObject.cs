@@ -5,9 +5,19 @@ using TMPro;
 
 public class SpawnObject : MonoBehaviour
 {
+    Manager managerScript;
+
+    private void Start()
+    {
+        managerScript = FindObjectOfType<Manager>();
+    }
+
     public void Spawn(GameObject objectToSpawn)
     {
-        Vector3 buttonT = this.transform.position;
-        var spawnedOject = Instantiate(objectToSpawn, this.transform);
+        Vector3 objectTransfomrPos = this.transform.position;
+        //Spawn object in front of button
+        Vector3 buttonT = new Vector3(0, 0, objectTransfomrPos.z + 0.5f);
+        var spawnedOject = Instantiate(objectToSpawn, buttonT, Quaternion.identity);
+        managerScript.AddList(spawnedOject);
     }
 }
