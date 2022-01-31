@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5697827888934012505}
   - component: {fileID: -3362633735947521838}
   - component: {fileID: -9142221847045302269}
-  - component: {fileID: 8993735184102185774}
+  - component: {fileID: 2496765471503091434}
   m_Layer: 0
   m_Name: new frame
   m_TagString: Untagged
@@ -161,7 +161,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.73745966, y: 1.1178948, z: 0.06761976}
   m_Center: {x: 0.00000031292439, y: 0, z: 0}
---- !u!114 &8993735184102185774
+--- !u!114 &2496765471503091434
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,3 +173,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87faa5228a620ca40b752f938192f739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameThisObject: Frame
