@@ -65,7 +65,7 @@ public class FirebaseManager : MonoBehaviour
                 localId = response.localId;
 
                 //Create account in the RealtimeDb from inputs
-                string link = restLink + "users/" + localId + ".json";
+                string link = restLink + "/users/" + localId + ".json";
                 User newUser = new User(email, username, localId);
                 RestClient.Put(link, newUser);
             }
