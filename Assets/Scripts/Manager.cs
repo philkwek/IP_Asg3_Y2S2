@@ -31,6 +31,7 @@ public class Manager : MonoBehaviour
     {
         if(objectInReference != null)
         {
+            objectInScene.Remove(objectInReference);
             Destroy(objectInReference);
             Debug.Log($"<color=red>Destroying {objectInReference.name}</color>");
 
@@ -41,5 +42,39 @@ public class Manager : MonoBehaviour
             objectName.text = "";
         }
 
+    }
+
+    public void Rotate()
+    {
+        Vector3 objectRotation = objectInReference.transform.eulerAngles;
+        float yRotation;
+
+        if(objectInReference != null)
+        {
+            Debug.Log("Attempting to rotate object and " + objectRotation.y);
+
+            if(objectRotation.y >= 270)
+            {
+                Debug.Log("Rotating to 0");
+                yRotation = 0;
+            } 
+            else if(objectRotation.y >= 180)
+            {
+                Debug.Log("Rotating to 270");
+                yRotation = 270;
+            } 
+            else if(objectRotation.y >= 90)
+            {
+                Debug.Log("Rotating to 180");
+                yRotation = 180;
+            } 
+            else
+            {
+                Debug.Log("Rotating to 90");
+                yRotation = 90;
+            }
+            objectInReference.transform.localRotation = Quaternion.Euler(0, yRotation, 0);
+            Debug.Log(objectInReference.transform.eulerAngles);
+        }
     }
 }

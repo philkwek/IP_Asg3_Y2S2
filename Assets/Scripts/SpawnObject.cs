@@ -16,7 +16,7 @@ public class SpawnObject : MonoBehaviour
     {
         Vector3 objectTransfomrPos = this.transform.position;
         //Spawn object in front of button
-        Vector3 buttonT = new Vector3(0, 0, objectTransfomrPos.z + 0.5f);
+        Vector3 buttonT = new Vector3(objectTransfomrPos.x, objectTransfomrPos.y, objectTransfomrPos.z + 0.5f);
         var spawnedOject = Instantiate(objectToSpawn, buttonT, Quaternion.identity);
         managerScript.AddList(spawnedOject);
     }
