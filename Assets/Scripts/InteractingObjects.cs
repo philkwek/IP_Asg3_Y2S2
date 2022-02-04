@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Microsoft.MixedReality.Toolkit.Input;
 
+
 public class InteractingObjects : MonoBehaviour, IMixedRealityFocusHandler
 {
     Manager managerScript;

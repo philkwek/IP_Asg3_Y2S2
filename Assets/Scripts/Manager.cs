@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+
 public class Manager : MonoBehaviour
 {
     public TextMeshPro objectName;
@@ -10,6 +11,8 @@ public class Manager : MonoBehaviour
     public List<GameObject> objectInScene = new List<GameObject>();
     [HideInInspector]
     public GameObject objectInReference;
+
+    public GameObject uiPrefab;
 
     private void Start()
     {
@@ -25,6 +28,11 @@ public class Manager : MonoBehaviour
         {
             Debug.Log($"{objectInScene[i].name} is in the scene");
         }
+    }
+
+    public void SpawnUI()
+    {
+
     }
 
     public void DestroyObject()
