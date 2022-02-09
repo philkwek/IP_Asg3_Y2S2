@@ -25,7 +25,6 @@ public class FirebaseManager : MonoBehaviour
        
     //references for img upload test
     public Texture2D imgTex;
-    byte[] bytes;
 
     private void Awake()
     {
@@ -70,6 +69,12 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
+    public void ConvertImage(Texture2D img){ //Function for converting texture2d img to base64 string
+        byte[] bytes = img.EncodeToPng();   //create a var called bytes with byte[]
+        string imageData = ConvertToBase64String(bytes);    //convert the img data to a base 64 string
+        return imageData;
+    }
+
     public void SaveProject()
     {
         string creator = localId;
@@ -77,15 +82,14 @@ public class FirebaseManager : MonoBehaviour
         int companyId = userCompanyId;
 
         //convert img to bytes before converting to a base64 for realtimedb storage
-        bytes = imgTex.EncodeToPNG();
-        string str = Convert.ToBase64String(bytes);
+        string imageData = ConvertImage(imgTex);
 
         //below are test values
         string[] furnitureUsed = { "chair", "table" }; //get furniture
         string houseType = "HDB"; //get housetype
         string nameOfLayout = "Test Layout"; //get name of layout
         int noOfBedrooms = 5; //get no of bedrooms
-        string[] pictures = { str }; //get no of pictures taken (max 3)
+        string[] pictures = { imageData }; //get no of pictures taken (max 3)
 
         Project newProject = new Project(companyId, creator, dateCreated, furnitureUsed, houseType, nameOfLayout, noOfBedrooms, pictures);
         string link = restLink + "/projects/.json?auth=" + idToken;
