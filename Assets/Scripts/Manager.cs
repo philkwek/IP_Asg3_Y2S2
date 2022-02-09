@@ -2,19 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Microsoft.MixedReality.Toolkit.UI;
+using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
 
 public class Manager : MonoBehaviour
 {
+    //The tmp that says what name of the object user last gazed at
     public TextMeshPro objectName;
 
+    //A list of object currently in scene
     public List<GameObject> objectInScene = new List<GameObject>();
     [HideInInspector]
+    //The object you are looking at
     public GameObject objectInReference;
+    public GameObject objectButtons;
 
     private void Start()
     {
         //Set text to empty
         objectName.text = "";
+    }
+
+    private void Update()
+    {
+        if(objectInReference != null)
+        {
+            objectButtons.SetActive(true);
+        } else
+        {
+            objectButtons.SetActive(false);
+        }
     }
 
     public void AddList(GameObject toAdd)
@@ -75,6 +92,43 @@ public class Manager : MonoBehaviour
             }
             objectInReference.transform.localRotation = Quaternion.Euler(0, yRotation, 0);
             Debug.Log(objectInReference.transform.eulerAngles);
+        }
+    }
+
+    public void MoveObejct()
+    {
+        Debug.Log("Moving " + objectInReference.name + " is now free to move");
+        TapToPlace tapScript = objectInReference.GetComponent<TapToPlace>();
+        if(tapScript != null)
+        {
+            tapScript.StartPlacement();
+        } else
+        {
+            Debug.Log($"{objectInReference.name} has no magnatism attached");
+        }
+    }
+
+    public void CycleMaterial()
+    {
+        ObjectMaterials objectMatScript = objectInReference.GetComponent<ObjectMaterials>();
+        if(objectMatScript.materials != null)
+        {
+            int currengtPos = objectMatScript.materialPos;
+            int materialArrayLength = objectMatScript.materials.Length;
+
+            currengtPos += 1;
+
+            if (currengtPos >= materialArrayLength)
+            {
+                currengtPos = 0;
+            }
+
+            Debug.Log("cycling through material");
+            objectInReference.GetComponent<MeshRenderer>().material = objectMatScript.materials[currengtPos];
+            objectMatScript.materialPos = currengtPos;
+        } else
+        {
+            Debug.Log("This object does not havbe any other material to cycle through");
         }
     }
 }
