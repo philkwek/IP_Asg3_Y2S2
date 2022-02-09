@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 4886088531773591654}
   - component: {fileID: 5946074626675349577}
   - component: {fileID: 8285794014474994666}
+  - component: {fileID: 2800309645986478160}
   m_Layer: 0
   m_Name: Humidifier2
   m_TagString: Untagged
@@ -293,3 +294,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTetherWhenManipulating: 0
   IsBoundsHandles: 0
+--- !u!114 &2800309645986478160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886088531773595544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98de877dee5fc341b4eb59dfdab266c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoConstraintSelection: 1
+  selectedConstraints: []
