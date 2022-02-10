@@ -92,7 +92,7 @@ public class FirebaseManager : MonoBehaviour
         //below are test values
         string[] furnitureUsed = { "chair", "table" }; //get furniture
         string houseType = "HDB"; //get housetype
-        string nameOfLayout = "Test Layout"; //get name of layout
+        string nameOfLayout = "Photo and Data Upload Test"; //get name of layout
         int noOfBedrooms = 5; //get no of bedrooms
         
         //creates json for upload
