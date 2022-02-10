@@ -37,4 +37,9 @@ public class MenuManager : MonoBehaviour
     {
         firebaseManager.SignInAccount(emailInput.text, passwordInput.text);
     }
+
+    public void TakeScreenshot()
+    {
+        Debug.Log("Took Screenshot!");
+    }
 }

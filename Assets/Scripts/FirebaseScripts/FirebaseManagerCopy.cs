@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using Models;
 using Proyecto26;
 using System.Collections.Generic;
 using UnityEngine.Networking;
@@ -10,7 +9,7 @@ using System;
 using System.IO;
 using UnityEngine.UI;
 
-public class FirebaseManager : MonoBehaviour
+public class FirebaseManagerCopy : MonoBehaviour
 {
 
     private string restLink = "https://ip-asg3-y2s2-default-rtdb.firebaseio.com";

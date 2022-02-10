@@ -642,7 +642,7 @@ PlayerSettings:
   assemblyVersionValidation: 1
   gcWBarrierValidation: 0
   apiCompatibilityLevelPerPlatform:
-    WSA: 3
+    WSA: 6
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: IPAsg3HololensPrj
@@ -703,10 +703,10 @@ PlayerSettings:
       PointOfService: False
       RecordedCallsFolder: False
       Contacts: False
+      Proximity: False
       InternetClient: True
       CodeGeneration: False
       BackgroundMediaPlayback: False
-      Proximity: False
   metroTargetDeviceFamilies:
     Desktop: False
     Holographic: False

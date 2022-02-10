@@ -5,19 +5,26 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using TMPro;
 using FullSerializer;
+using System;
+using System.IO;
+using UnityEngine.UI;
 
 
 public class FirebaseManager : MonoBehaviour
-{
+{ 
 
     private string restLink = "https://ip-asg3-y2s2-default-rtdb.firebaseio.com";
     private string AuthKey = "AIzaSyB4iLqQhetQzvpCJIhczEZrRlF3daOsXJI"; //api key for firebase project 
 
-    //account data
-    public string idToken;
-    public static string localId; //this is the unique account authID
+    //account references
+    public string idToken; //used for authenticating pushes to db
+    public static string localId; //this is the unique account uid
+    public static int userCompanyId = 0;
 
     public static fsSerializer serializer = new fsSerializer();
+
+    //Image data reference
+    List<string> imageDataList;
 
     private void Awake()
     {
@@ -27,7 +34,7 @@ public class FirebaseManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     //example function for posting data to database
@@ -37,14 +44,13 @@ public class FirebaseManager : MonoBehaviour
         //RestClient.Put(link, new User("test", 5));
     }
 
-    private void GetDatabaseIds() 
+    private void GetDatabaseIds()
     {
         Debug.Log("Getting from Database");
         RestClient.Get(restLink + "/users.json?auth=" + idToken).Then(response =>
         {
             fsData userData = fsJsonParser.Parse(response.Text); //converts text into json
-            Debug.Log(userData);
-            Dictionary<string, User> users = null; 
+            Dictionary<string, User> users = null;
             serializer.TryDeserialize(userData, ref users); //tries to translate json into the declared user array
             foreach (var user in users.Values)
             {
@@ -53,7 +59,52 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
-    //example function for creating account with firebase
+    public void GetUserCompanyId(string databaseId)
+    {
+        RestClient.Get<User>(restLink + "/users/" + databaseId + ".json?auth=" + idToken).Then(response =>
+        {
+            userCompanyId = response.companyId;
+            Debug.Log(userCompanyId);
+            SaveProject(); //for testing, remove when done
+        });
+    }
+
+    public void SavePhotoData(string imgData)
+    {
+        if (imageDataList.Count < 3)
+        {
+            imageDataList.Add(imgData);
+        } else
+        {
+            SaveProject(); //for testing, tests camera function & upload project function to db, runs once 3 images have been taken an recorded
+            Debug.Log("Max number of photos taken!");
+        }
+        Debug.Log(imageDataList);
+    }
+
+    public void SaveProject()
+    {
+        string creator = localId;
+        string dateCreated = DateTime.Now.ToString("yyyy-MM-dd");
+        int companyId = userCompanyId;
+        string[] pictures = imageDataList.ToArray(); //converts imagedata list into an array
+
+        //below are test values
+        string[] furnitureUsed = { "chair", "table" }; //get furniture
+        string houseType = "HDB"; //get housetype
+        string nameOfLayout = "Test Layout"; //get name of layout
+        int noOfBedrooms = 5; //get no of bedrooms
+        
+        //creates json for upload
+        Project newProject = new Project(companyId, creator, dateCreated, furnitureUsed, houseType, nameOfLayout, noOfBedrooms, pictures);
+        string link = restLink + "/projects/.json?auth=" + idToken;
+        RestClient.Post(link, newProject).Then(response => {
+            Debug.Log(response.Text); //project id 
+        });
+    }
+
+
+    //function for creating account with firebase
     public void CreateAccount(string email, string username, string password)
     {
         string userData = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"returnSecureToken\":true}";
@@ -74,7 +125,7 @@ public class FirebaseManager : MonoBehaviour
        });
     }
 
-    //example function for signing in user
+    //function for signing in user and getting their profile data
     public void SignInAccount(string email, string password)
     {
         string userData = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"returnSecureToken\":true}";
@@ -83,11 +134,13 @@ public class FirebaseManager : MonoBehaviour
             {
                 idToken = response.idToken;
                 localId = response.localId;
+                GetUserCompanyId(localId);
 
             }).Catch(error =>
             {
                 Debug.Log(error);
             });
+
     }
 
 }
