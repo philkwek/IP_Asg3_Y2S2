@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Microsoft.MixedReality.Toolkit.UI;
+using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
+using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
+using Microsoft.MixedReality.Toolkit.Input;
+
 
 public class SpawnObject : MonoBehaviour
 {
@@ -14,11 +19,35 @@ public class SpawnObject : MonoBehaviour
 
     public void Spawn(GameObject objectToSpawn)
     {
-        //Vector3 objectTransfomrPos = this.transform.position;
-        ////Spawn object in front of button
-        //Vector3 buttonT = new Vector3(objectTransfomrPos.x, objectTransfomrPos.y, objectTransfomrPos.z + 0.5f);
-        //var spawnedOject = Instantiate(objectToSpawn, buttonT, Quaternion.identity);
-        var spawnedObject = Instantiate(objectToSpawn);
+        GameObject spawnedObject = Instantiate(objectToSpawn, new Vector3(0,0,0.5f), Quaternion.identity);
+        spawnedObject.AddComponent<BoxCollider>();
+        spawnedObject.AddComponent<NearInteractionGrabbable>();
+        spawnedObject.AddComponent<ObjectMaterials>();
+
+        //Setting ObjectManipulatorr settings
+        spawnedObject.AddComponent<ObjectManipulator>();
+        //Edit ManipulationData IF I CAN FREAKING FIND THE DOCUMANTATION THAT TELL YOU SOMETHING OMG
+
+        //Setting SolverHandler
+        spawnedObject.AddComponent<SolverHandler>();
+        spawnedObject.GetComponent<SolverHandler>().TrackedTargetType = Microsoft.MixedReality.Toolkit.Utilities.TrackedObjectType.ControllerRay;
+        spawnedObject.GetComponent<SolverHandler>().TrackedHandness = Microsoft.MixedReality.Toolkit.Utilities.Handedness.Right;
+
+        //Setting the name of object
+        spawnedObject.AddComponent<InteractingObjects>();
+        spawnedObject.GetComponent<InteractingObjects>().nameThisObject = objectToSpawn.name;
+
+
+        //Setting configuration for boundsControl
+        spawnedObject.AddComponent<BoundsControl>();
+        spawnedObject.GetComponent<BoundsControl>().RotationHandlesConfig = managerScript.rotationConfig;
+        spawnedObject.GetComponent<BoundsControl>().ScaleHandlesConfig = managerScript.scaleConfig;
+
+        //Setting TapToPlace settings
+        spawnedObject.AddComponent<TapToPlace>();
+        spawnedObject.GetComponent<TapToPlace>().KeepOrientationVertical = true;
+        spawnedObject.GetComponent<TapToPlace>().RotateAccordingToSurface = false;
+
         managerScript.AddList(spawnedObject);
     }
 }

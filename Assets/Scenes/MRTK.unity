@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -9250,13 +9250,14 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: Increment
-        m_Mode: 1
+      - m_Target: {fileID: 520459512}
+        m_TargetAssemblyTypeName: SpawnObject, Assembly-CSharp
+        m_MethodName: Spawn
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 919132149155446097, guid: 23b450a698fb48d4b85aedb00f0754e8,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -12803,6 +12804,11 @@ MonoBehaviour:
   objectInScene: []
   objectInReference: {fileID: 0}
   objectButtons: {fileID: 503339307}
+  humidifierMat: []
+  dysonFanMat: []
+  leafMat: []
+  rotationConfig: {fileID: 11400000, guid: 1736ca4ecc10f4c44abe7eb3e1d39268, type: 2}
+  scaleConfig: {fileID: 11400000, guid: 8e9a6a5383d0e3b42adfb7b8434982c2, type: 2}
 --- !u!114 &520459516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35505,7 +35511,7 @@ MonoBehaviour:
         m_MethodName: Spawn
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 4886088531773595544, guid: 91d88c18229de93488d80b1ad2cfb02c,
+          m_ObjectArgument: {fileID: 919132149155446097, guid: a5b07afcbbfdcd84089647e8e549dd73,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0

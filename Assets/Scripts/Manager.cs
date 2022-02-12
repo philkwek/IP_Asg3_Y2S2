@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Microsoft.MixedReality.Toolkit.UI;
+using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
+using Microsoft.MixedReality.Toolkit.Input;
+using Microsoft.MixedReality.Toolkit.Tools;
 
 public class Manager : MonoBehaviour
 {
@@ -16,6 +19,18 @@ public class Manager : MonoBehaviour
     //The object you are looking at
     public GameObject objectInReference;
     public GameObject objectButtons;
+
+    //[Header("Models")]
+    //public 
+
+    [Header("Materials")]
+    public Material[] humidifierMat;
+    public Material[] dysonFanMat;
+    public Material[] leafMat;
+
+    [Header("Configuation")]
+    public RotationHandlesConfiguration rotationConfig;
+    public ScaleHandlesConfiguration scaleConfig;
 
     private void Start()
     {
