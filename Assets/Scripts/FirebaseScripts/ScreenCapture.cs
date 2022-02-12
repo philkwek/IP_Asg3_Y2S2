@@ -12,10 +12,6 @@ public class ScreenCapture : MonoBehaviour
 
     private PhotoCapture photoCaptureObject = null;
 
-    public Texture2D picture1;
-    public Texture2D picture2;
-    public Texture2D picture3;
-
     // Start is called before the first frame update
     void Start()
     {
