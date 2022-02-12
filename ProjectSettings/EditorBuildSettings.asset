@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MRTK.unity
     guid: 607126d032c9eee42a26147752bf1882
+  - enabled: 1
+    path: Assets/Scenes/FireabaseTestScene.unity
+    guid: 85b4e1cc0dd53084da494f75cdfc3f3f
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 9e5d9cb3da5edc3479f1040e90936a64,
       type: 2}

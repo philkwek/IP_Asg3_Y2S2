@@ -24,7 +24,17 @@ public class FirebaseManager : MonoBehaviour
     public static fsSerializer serializer = new fsSerializer();
 
     //Image data reference
-    List<string> imageDataList;
+    public string imgData1 = "";
+    public string imgData2 = "";
+    public string imgData3 = "";
+
+    //Alert Reference
+    public GameObject alertBox;
+    public GameObject loggedInAlert;
+    public GameObject signedUpAlert;
+
+    //Debug Text Test
+    public TextMeshProUGUI debugText; 
 
     private void Awake()
     {
@@ -71,23 +81,33 @@ public class FirebaseManager : MonoBehaviour
 
     public void SavePhotoData(string imgData)
     {
-        if (imageDataList.Count < 3)
+        debugText.text = imgData;
+
+        if (imgData1 == "")
         {
-            imageDataList.Add(imgData);
+            imgData1 = imgData;
+            debugText.text = imgData;
+
+        } else if (imgData2 == "")
+        {
+            imgData2 = imgData;
+
+        } else if (imgData3 == "")
+        {
+            imgData3 = imgData;
+
         } else
         {
-            SaveProject(); //for testing, tests camera function & upload project function to db, runs once 3 images have been taken an recorded
-            Debug.Log("Max number of photos taken!");
+            SaveProject();
         }
-        Debug.Log(imageDataList);
     }
 
     public void SaveProject()
     {
-        string creator = localId;
+        string creator = "test";
         string dateCreated = DateTime.Now.ToString("yyyy-MM-dd");
-        int companyId = userCompanyId;
-        string[] pictures = imageDataList.ToArray(); //converts imagedata list into an array
+        int companyId = 0;
+        string[] pictures = {imgData1, imgData2, imgData3}; //converts imagedata list into an array
 
         //below are test values
         string[] furnitureUsed = { "chair", "table" }; //get furniture
@@ -118,6 +138,8 @@ public class FirebaseManager : MonoBehaviour
                 string link = restLink + "/users/" + localId + ".json?auth=" + idToken;
                 User newUser = new User(email, username, localId);
                 RestClient.Put(link, newUser);
+                alertBox.SetActive(true);
+                signedUpAlert.SetActive(true);
             }
        ).Catch(error =>
        {
@@ -135,6 +157,8 @@ public class FirebaseManager : MonoBehaviour
                 idToken = response.idToken;
                 localId = response.localId;
                 GetUserCompanyId(localId);
+                alertBox.SetActive(true);
+                loggedInAlert.SetActive(true);
 
             }).Catch(error =>
             {

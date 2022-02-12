@@ -163,9 +163,6 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: -6613221715614172072, guid: 7947d032627849746989b470a219c1c0, type: 2}
-  - {fileID: 6794739709518838139, guid: f0f0a7ed655567c4289eb6ca7263f5e0, type: 2}
-  - {fileID: 170469780756789445, guid: 9e5d9cb3da5edc3479f1040e90936a64, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -707,10 +704,10 @@ PlayerSettings:
       PointOfService: False
       RecordedCallsFolder: False
       Contacts: False
-      Proximity: False
       InternetClient: True
       CodeGeneration: False
       BackgroundMediaPlayback: False
+      Proximity: False
   metroTargetDeviceFamilies:
     Desktop: False
     Holographic: False
