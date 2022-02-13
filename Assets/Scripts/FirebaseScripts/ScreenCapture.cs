@@ -14,7 +14,7 @@ public class ScreenCapture : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PhotoCapture.CreateAsync(false, OnPhotoCaptureCreated);
+        PhotoCapture.CreateAsync(true, OnPhotoCaptureCreated);
     }
 
     // Update is called once per frame
