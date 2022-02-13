@@ -3,11 +3,13 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Windows.WebCam;
+using TMPro;
 
 public class ScreenCapture : MonoBehaviour
 {
 
     public FirebaseManager firebaseManager;
+    public TextMeshProUGUI debugText;
 
     private PhotoCapture photoCaptureObject = null;
     private CameraParameters camera;
@@ -53,10 +55,12 @@ public class ScreenCapture : MonoBehaviour
         if (result.success) //if started, runs function to take a photo
         {
             photoCaptureObject.TakePhotoAsync(OnCapturedPhotoToMemory); //takes photo
+            debugText.text = "Took photo!";
         }
         else
         {
             Debug.LogError("Unable to start photo mode!");
+            debugText.text = "Unable to start photo mode!";
         }
     }
 
@@ -64,6 +68,7 @@ public class ScreenCapture : MonoBehaviour
     {
         if (result.success)
         {
+            debugText.text = "Took photo success!";
             // Create our Texture2D for use and set the correct resolution
             Resolution cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending((res) => res.width * res.height).First();
             Texture2D texture = new Texture2D(cameraResolution.width, cameraResolution.height);

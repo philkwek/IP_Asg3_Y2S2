@@ -5342,6 +5342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firebaseManager: {fileID: 922213076}
+  debugText: {fileID: 95356001}
 --- !u!4 &1023357075
 Transform:
   m_ObjectHideFlags: 0
