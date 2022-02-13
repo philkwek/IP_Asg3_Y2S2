@@ -10,11 +10,12 @@ public class ScreenCapture : MonoBehaviour
     public FirebaseManager firebaseManager;
 
     private PhotoCapture photoCaptureObject = null;
+    private CameraParameters camera;
 
     // Start is called before the first frame update
     void Start()
     {
-        PhotoCapture.CreateAsync(true, OnPhotoCaptureCreated);
+        PhotoCapture.CreateAsync(true, OnPhotoCaptureCreated); //creates photo capture object on app start
     }
 
     // Update is called once per frame
@@ -22,29 +23,6 @@ public class ScreenCapture : MonoBehaviour
     {
 
     }
-
-    public void StartCamera() //Runs when capture button is pressed, Only activates camera for phototaking when needed as photo mode requires heavy resources
-    {
-        //StartCoroutine(StartCameraCapture());
-    }
-
-    //private IEnumerator StartCameraCapture()
-    //{
-    //    //checks if app has permissions to use Hololens 2 webcam, if not, it requests for permission
-    //    if (!Application.HasUserAuthorization(UserAuthorization.WebCam))
-    //    {
-    //        yield return Application.RequestUserAuthorization(UserAuthorization.WebCam);
-    //    }
-    //    if (Application.HasUserAuthorization(UserAuthorization.WebCam))
-    //    {
-    //        Debug.Log("Creating PhotoCapture");
-    //        PhotoCapture.CreateAsync(false, OnPhotoCaptureCreated);
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Webcam Permission not granted");
-    //    }
-    //}
 
     public string ConvertToBase64(Texture2D textureConvert) //function returns a base64 from input texture
     {
@@ -59,26 +37,22 @@ public class ScreenCapture : MonoBehaviour
 
         Resolution cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending((res) => res.width * res.height).First();
 
-        CameraParameters c = new CameraParameters();
-        c.hologramOpacity = 0.0f;
-        c.cameraResolutionWidth = cameraResolution.width;
-        c.cameraResolutionHeight = cameraResolution.height;
-        c.pixelFormat = CapturePixelFormat.BGRA32;
-
-        captureObject.StartPhotoModeAsync(c, OnPhotoModeStarted); //Activates camera and passes in camera settings
+        camera.hologramOpacity = 0.0f;
+        camera.cameraResolutionWidth = cameraResolution.width;
+        camera.cameraResolutionHeight = cameraResolution.height;
+        camera.pixelFormat = CapturePixelFormat.BGRA32;
     }
 
-    private void OnStoppedPhotoMode(PhotoCapture.PhotoCaptureResult result) //function runs when photo mode ends
+    public void TakePhoto() //When button is pressed, it activates camera mode and passes in camera settings which will then take a photo
     {
-        photoCaptureObject.Dispose();
-        photoCaptureObject = null;
+        photoCaptureObject.StartPhotoModeAsync(camera, OnPhotoModeStarted);
     }
 
     private void OnPhotoModeStarted(PhotoCapture.PhotoCaptureResult result) //checks to see if photocapture mode started successfully
     {
         if (result.success) //if started, runs function to take a photo
         {
-            photoCaptureObject.TakePhotoAsync(OnCapturedPhotoToMemory);
+            photoCaptureObject.TakePhotoAsync(OnCapturedPhotoToMemory); //takes photo
         }
         else
         {
@@ -102,6 +76,12 @@ public class ScreenCapture : MonoBehaviour
 
         }
         // Stops Camera after image is taken
-        photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode);
+        photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode); 
+    }
+
+    private void OnStoppedPhotoMode(PhotoCapture.PhotoCaptureResult result) //function runs when photo mode ends
+    {
+        photoCaptureObject.Dispose();
+        photoCaptureObject = null;
     }
 }

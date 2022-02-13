@@ -1178,7 +1178,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1023357074}
         m_TargetAssemblyTypeName: ScreenCapture, Assembly-CSharp
-        m_MethodName: StartCamera
+        m_MethodName: TakePhoto
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1440,7 +1440,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1023357074}
         m_TargetAssemblyTypeName: ScreenCapture, Assembly-CSharp
-        m_MethodName: StartCamera
+        m_MethodName: TakePhoto
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5342,9 +5342,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firebaseManager: {fileID: 922213076}
-  picture1: {fileID: 0}
-  picture2: {fileID: 0}
-  picture3: {fileID: 0}
 --- !u!4 &1023357075
 Transform:
   m_ObjectHideFlags: 0
