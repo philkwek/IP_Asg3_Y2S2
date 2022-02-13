@@ -52,6 +52,7 @@ public class ScreenCapture : MonoBehaviour
 
     public void TakePhoto() //When button is pressed, it activates camera mode and passes in camera settings which will then take a photo
     {
+        debugText.text = "Button Pressed!";
         photoCaptureObject.StartPhotoModeAsync(camera, OnPhotoModeStarted);
     }
 
