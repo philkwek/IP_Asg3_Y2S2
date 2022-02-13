@@ -18,6 +18,16 @@ public class InteractingObjects : MonoBehaviour, IMixedRealityFocusHandler
         Debug.Log($"{this.gameObject.name} has entered gaze");
         if (managerScript != null)
         {
+            if(eventData.NewFocusedObject.GetComponent<Animator>() != null)
+            {
+                managerScript.animationPlayButton.SetActive(true);
+                managerScript.UpdateCollection();
+            } else
+            {
+                managerScript.animationPlayButton.SetActive(false);
+                managerScript.UpdateCollection();
+            }
+
             managerScript.objectInReference = this.gameObject;
             managerScript.objectName.text = nameThisObject;
         }

@@ -21,7 +21,7 @@ public class SpawnObject : MonoBehaviour
     {
         GameObject spawnedObject = Instantiate(objectToSpawn, new Vector3(0,0,0.5f), Quaternion.identity);
         spawnedObject.AddComponent<BoxCollider>();
-        spawnedObject.AddComponent<NearInteractionGrabbable>();
+        //spawnedObject.AddComponent<NearInteractionGrabbable>();
         spawnedObject.AddComponent<ObjectMaterials>();
 
         //Setting ObjectManipulatorr settings

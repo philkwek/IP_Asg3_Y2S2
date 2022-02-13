@@ -5,6 +5,7 @@ using TMPro;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
+using Microsoft.MixedReality.Toolkit.Utilities;
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Tools;
 
@@ -20,13 +21,10 @@ public class Manager : MonoBehaviour
     public GameObject objectInReference;
     public GameObject objectButtons;
 
-    //[Header("Models")]
-    //public 
+    [Header("Object Interection Buttons")]
+    public GameObject animationPlayButton;
+    public BaseObjectCollection collectionScript;
 
-    [Header("Materials")]
-    public Material[] humidifierMat;
-    public Material[] dysonFanMat;
-    public Material[] leafMat;
 
     [Header("Configuation")]
     public RotationHandlesConfiguration rotationConfig;
@@ -112,11 +110,12 @@ public class Manager : MonoBehaviour
 
     public void MoveObejct()
     {
-        Debug.Log("Moving " + objectInReference.name + " is now free to move");
+        //Debug.Log("Moving " + objectInReference.name + " is now free to move");
         TapToPlace tapScript = objectInReference.GetComponent<TapToPlace>();
         if(tapScript != null)
         {
-            tapScript.StartPlacement();
+            tapScript.enabled = !tapScript.enabled;
+            //tapScript.StartPlacement();
         } else
         {
             Debug.Log($"{objectInReference.name} has no magnatism attached");
@@ -145,5 +144,18 @@ public class Manager : MonoBehaviour
         {
             Debug.Log("This object does not havbe any other material to cycle through");
         }
+    }
+
+    public void PlayAnimation()
+    {
+        Animator objectAnimator = objectInReference.GetComponent<Animator>();
+        if(objectAnimator != null)
+        {
+            objectAnimator.Play("Chair");
+        }
+    }
+    public void UpdateCollection()
+    {
+        collectionScript.UpdateCollection();
     }
 }
