@@ -14,10 +14,15 @@ public class ScreenCapture : MonoBehaviour
     private PhotoCapture photoCaptureObject = null;
     private CameraParameters camera;
 
+    private void Awake()
+    {
+        PhotoCapture.CreateAsync(true, OnPhotoCaptureCreated); //creates photo capture object on app start
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        PhotoCapture.CreateAsync(true, OnPhotoCaptureCreated); //creates photo capture object on app start
+        
     }
 
     // Update is called once per frame
@@ -52,6 +57,7 @@ public class ScreenCapture : MonoBehaviour
 
     private void OnPhotoModeStarted(PhotoCapture.PhotoCaptureResult result) //checks to see if photocapture mode started successfully
     {
+        debugText.text = "Photo Mode started!";
         if (result.success) //if started, runs function to take a photo
         {
             photoCaptureObject.TakePhotoAsync(OnCapturedPhotoToMemory); //takes photo
