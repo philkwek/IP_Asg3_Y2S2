@@ -30,8 +30,8 @@ public class SpawnObject : MonoBehaviour
 
         //Setting SolverHandler
         spawnedObject.AddComponent<SolverHandler>();
-        spawnedObject.GetComponent<SolverHandler>().TrackedTargetType = Microsoft.MixedReality.Toolkit.Utilities.TrackedObjectType.ControllerRay;
-        spawnedObject.GetComponent<SolverHandler>().TrackedHandness = Microsoft.MixedReality.Toolkit.Utilities.Handedness.Right;
+        //spawnedObject.GetComponent<SolverHandler>().TrackedTargetType = Microsoft.MixedReality.Toolkit.Utilities.TrackedObjectType.ControllerRay;
+        //spawnedObject.GetComponent<SolverHandler>().TrackedHandness = Microsoft.MixedReality.Toolkit.Utilities.Handedness.Right;
 
         //Setting the name of object
         spawnedObject.AddComponent<InteractingObjects>();
@@ -47,6 +47,12 @@ public class SpawnObject : MonoBehaviour
         spawnedObject.AddComponent<TapToPlace>();
         spawnedObject.GetComponent<TapToPlace>().KeepOrientationVertical = true;
         spawnedObject.GetComponent<TapToPlace>().RotateAccordingToSurface = false;
+
+        //Disable the default offset as it is not accurate
+        spawnedObject.GetComponent<TapToPlace>().UseDefaultSurfaceNormalOffset = false;
+        //set it mauanally
+        spawnedObject.GetComponent<TapToPlace>().SurfaceNormalOffset = spawnedObject.GetComponent<BoxCollider>().size.y/2;
+
 
         managerScript.AddList(spawnedObject);
     }
