@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Windows.WebCam;
@@ -15,37 +14,37 @@ public class ScreenCapture : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        PhotoCapture.CreateAsync(false, OnPhotoCaptureCreated);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void StartCamera() //Runs when capture button is pressed, Only activates camera for phototaking when needed as photo mode requires heavy resources
     {
-        StartCoroutine(StartCameraCapture());
+        //StartCoroutine(StartCameraCapture());
     }
 
-    private IEnumerator StartCameraCapture()
-    {
-        //checks if app has permissions to use Hololens 2 webcam, if not, it requests for permission
-        if (!Application.HasUserAuthorization(UserAuthorization.WebCam)) 
-        {
-            yield return Application.RequestUserAuthorization(UserAuthorization.WebCam);
-        }
-        if (Application.HasUserAuthorization(UserAuthorization.WebCam))
-        {
-            Debug.Log("Creating PhotoCapture");
-            PhotoCapture.CreateAsync(false, OnPhotoCaptureCreated);
-        }
-        else
-        {
-            Debug.Log("Webcam Permission not granted");
-        }
-    }
+    //private IEnumerator StartCameraCapture()
+    //{
+    //    //checks if app has permissions to use Hololens 2 webcam, if not, it requests for permission
+    //    if (!Application.HasUserAuthorization(UserAuthorization.WebCam))
+    //    {
+    //        yield return Application.RequestUserAuthorization(UserAuthorization.WebCam);
+    //    }
+    //    if (Application.HasUserAuthorization(UserAuthorization.WebCam))
+    //    {
+    //        Debug.Log("Creating PhotoCapture");
+    //        PhotoCapture.CreateAsync(false, OnPhotoCaptureCreated);
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Webcam Permission not granted");
+    //    }
+    //}
 
     public string ConvertToBase64(Texture2D textureConvert) //function returns a base64 from input texture
     {

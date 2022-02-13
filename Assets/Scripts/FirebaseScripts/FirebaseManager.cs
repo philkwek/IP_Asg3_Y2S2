@@ -24,9 +24,9 @@ public class FirebaseManager : MonoBehaviour
     public static fsSerializer serializer = new fsSerializer();
 
     //Image data reference
-    public string imgData1 = "";
-    public string imgData2 = "";
-    public string imgData3 = "";
+    public string imgData1;
+    public string imgData2;
+    public string imgData3;
 
     //Alert Reference
     public GameObject alertBox;
@@ -83,16 +83,15 @@ public class FirebaseManager : MonoBehaviour
     {
         debugText.text = imgData;
 
-        if (imgData1 == "")
+        if (imgData1 == null)
         {
             imgData1 = imgData;
-            debugText.text = imgData;
 
-        } else if (imgData2 == "")
+        } else if (imgData2 == null)
         {
             imgData2 = imgData;
 
-        } else if (imgData3 == "")
+        } else if (imgData3 == null)
         {
             imgData3 = imgData;
 
