@@ -17,6 +17,12 @@ public class MenuManager : MonoBehaviour
     public TextMeshProUGUI emailInput;
     public TextMeshProUGUI passwordInput;
 
+    //Save Project 
+    public TextMeshProUGUI projectName;
+    public TextMeshProUGUI houseType;
+    public TextMeshProUGUI roomCount;
+    public GameObject alertText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +32,11 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (firebaseManager == null)
+        {
+            GameObject firebase = GameObject.Find("FirebaseManager");
+            firebaseManager = firebase.GetComponent<FirebaseManager>();
+        }
     }
 
     public void CreateAccount()
@@ -42,5 +52,21 @@ public class MenuManager : MonoBehaviour
     public void LoggedInAccount()
     {
         SceneManager.LoadScene("MRTK");
+    }
+
+    public void SaveProject()
+    {   //runs when button is pressed, gets input values and inserts into firebaseManager for upload.
+        firebaseManager.SaveProject(projectName.text, houseType.text, roomCount.text);
+    }
+
+    public void AlertSave()
+    {
+        alertText.SetActive(true);
+    }
+
+    public void StartNew()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
     }
 }

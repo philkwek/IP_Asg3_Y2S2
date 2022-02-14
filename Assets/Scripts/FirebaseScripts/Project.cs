@@ -9,12 +9,12 @@ public class Project
     public string houseType;
     public string[] likes;
     public string nameOfLayout;
-    public int noOfBedrooms;
+    public string noOfBedrooms;
     public string[] pictures;
 
     public Project(int companyId, string creator, string dateCreated,
         string[] furnitureUsed, string houseType, string nameOfLayout,
-        int noOfBedrooms, string[] noOfPictures)
+        string noOfBedrooms, string[] noOfPictures)
     {
         this.companyId = companyId;
         this.creator = creator;

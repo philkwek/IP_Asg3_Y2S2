@@ -22,7 +22,9 @@ public class FirebaseManager : MonoBehaviour
     //account references
     public string idToken; //used for authenticating pushes to db
     public static string localId; //this is the unique account uid
+    public string username;
     public static int userCompanyId = 0;
+    public string companyName;
 
     public static fsSerializer serializer = new fsSerializer();
 
@@ -58,9 +60,8 @@ public class FirebaseManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void GetDatabaseIds()
+    public void GetProfile()
     {
-        Debug.Log("Getting from Database");
         RestClient.Get(restLink + "/users.json?auth=" + idToken).Then(response =>
         {
             fsData userData = fsJsonParser.Parse(response.Text); //converts text into json
@@ -68,7 +69,30 @@ public class FirebaseManager : MonoBehaviour
             serializer.TryDeserialize(userData, ref users); //tries to translate json into the declared user array
             foreach (var user in users.Values)
             {
+                if (user.databaseId == localId)
+                {
+                    username = user.username;
+                    userCompanyId = user.companyId;
+                    GetCompanyName(userCompanyId);
+                }
                 Debug.Log(user.username);
+            }
+        });
+    }
+
+    public void GetCompanyName(int companyId)
+    {
+        RestClient.Get(restLink + "/companys/" + companyId + ".json?auth=" + idToken).Then(response =>
+        {
+            fsData companyData = fsJsonParser.Parse(response.Text); //converts text into json
+            Dictionary<string, Company> company = null;
+            serializer.TryDeserialize(companyData, ref company); //tries to translate json into the declared user array
+            foreach (var data in company.Values)
+            {
+                if (data.companyId == userCompanyId)
+                {
+                    companyName = data.companyName;
+                }
             }
         });
     }
@@ -90,14 +114,6 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
-    public void GetUserCompanyId(string databaseId)
-    {
-        RestClient.Get<User>(restLink + "/users/" + databaseId + ".json?auth=" + idToken).Then(response =>
-        {
-            userCompanyId = response.companyId;
-        });
-    }
-
     public void SavePhotoData(string imgData)
     {
 
@@ -113,30 +129,25 @@ public class FirebaseManager : MonoBehaviour
         {
             imgData3 = imgData;
 
-        } else
-        {
-            SaveProject();
-        }
+        } 
     }
 
-    public void SaveProject()
+    public void SaveProject(string projectName, string houseType, string roomNumber)
     {
         string creator = "test";
         string dateCreated = DateTime.Now.ToString("yyyy-MM-dd");
         int companyId = 0;
         string[] pictures = {imgData1, imgData2, imgData3}; //converts imagedata list into an array
 
-        //below are test values
-        string[] furnitureUsed = { "chair", "table" }; //get furniture
-        string houseType = "HDB"; //get housetype
-        string nameOfLayout = "Photo and Data Upload Test"; //get name of layout
-        int noOfBedrooms = 5; //get no of bedrooms
+        string[] furnitureUsed = { "chair", "table" }; //get furniture list
         
         //creates json for upload
-        Project newProject = new Project(companyId, creator, dateCreated, furnitureUsed, houseType, nameOfLayout, noOfBedrooms, pictures);
+        Project newProject = new Project(companyId, creator, dateCreated, furnitureUsed, houseType, projectName, roomNumber, pictures);
         string link = restLink + "/projects/.json?auth=" + idToken;
         RestClient.Post(link, newProject).Then(response => {
             Debug.Log(response.Text); //project id 
+            GameObject menu = GameObject.Find("SaveProject");
+            menu.GetComponent<MenuManager>().AlertSave();
         });
     }
 
@@ -177,7 +188,7 @@ public class FirebaseManager : MonoBehaviour
             {
                 idToken = response.idToken;
                 localId = response.localId;
-                GetUserCompanyId(localId);
+                GetProfile();
 
                 alertBox_login.SetActive(true);
                 alertBox_text_login.text = "Logged in successfully!";
