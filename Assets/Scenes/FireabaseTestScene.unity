@@ -592,6 +592,7 @@ GameObject:
   - component: {fileID: 129827742}
   - component: {fileID: 129827744}
   - component: {fileID: 129827743}
+  - component: {fileID: 129827745}
   m_Layer: 0
   m_Name: FrontPlate
   m_TagString: Untagged
@@ -656,6 +657,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129827741}
   m_CullTransparentMesh: 0
+--- !u!114 &129827745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129827741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5970893ef64ed4aa155d71e6c515ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &150476271
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,9 +1189,9 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 430210385}
-        m_TargetAssemblyTypeName: NewScreenCapture, Assembly-CSharp
-        m_MethodName: StartCap
+      - m_Target: {fileID: 1023357074}
+        m_TargetAssemblyTypeName: ScreenCapture, Assembly-CSharp
+        m_MethodName: TakePhoto
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1438,9 +1451,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 430210385}
-        m_TargetAssemblyTypeName: NewScreenCapture, Assembly-CSharp
-        m_MethodName: StartCap
+      - m_Target: {fileID: 1023357074}
+        m_TargetAssemblyTypeName: ScreenCapture, Assembly-CSharp
+        m_MethodName: TakePhoto
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1903,7 +1916,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &430210385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5372,7 +5385,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1023357074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7130,6 +7143,7 @@ GameObject:
   - component: {fileID: 1433441135}
   - component: {fileID: 1433441134}
   - component: {fileID: 1433441133}
+  - component: {fileID: 1433441139}
   m_Layer: 0
   m_Name: UnityUIButton(Clone)
   m_TagString: Untagged
@@ -7392,6 +7406,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433441131}
   m_CullTransparentMesh: 0
+--- !u!114 &1433441139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433441131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5970893ef64ed4aa155d71e6c515ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1486328133
 GameObject:
   m_ObjectHideFlags: 0
@@ -8584,6 +8610,7 @@ GameObject:
   - component: {fileID: 1636709276}
   - component: {fileID: 1636709278}
   - component: {fileID: 1636709277}
+  - component: {fileID: 1636709279}
   m_Layer: 0
   m_Name: Icon
   m_TagString: Untagged
@@ -8648,6 +8675,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636709275}
   m_CullTransparentMesh: 0
+--- !u!114 &1636709279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636709275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5970893ef64ed4aa155d71e6c515ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1656611366
 GameObject:
   m_ObjectHideFlags: 0
@@ -9732,10 +9771,9 @@ GameObject:
   - component: {fileID: 2006806114}
   - component: {fileID: 2006806113}
   - component: {fileID: 2006806112}
-  - component: {fileID: 2006806116}
-  - component: {fileID: 2006806115}
   - component: {fileID: 2006806118}
   - component: {fileID: 2006806117}
+  - component: {fileID: 2006806115}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -9825,25 +9863,11 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 31
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &2006806115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2006806110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fcaf896491074042b7ed7684454a412, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventsToReceive: 0
-  debounceThreshold: 0.01
---- !u!114 &2006806116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -11,7 +11,10 @@ using UnityEngine.UI;
 
 
 public class FirebaseManager : MonoBehaviour
-{ 
+{
+
+    public static FirebaseManager instance;
+    public MenuManager menuManager;
 
     private string restLink = "https://ip-asg3-y2s2-default-rtdb.firebaseio.com";
     private string AuthKey = "AIzaSyB4iLqQhetQzvpCJIhczEZrRlF3daOsXJI"; //api key for firebase project 
@@ -29,29 +32,30 @@ public class FirebaseManager : MonoBehaviour
     public string imgData3;
 
     //Alert Reference
-    public GameObject alertBox;
-    public GameObject loggedInAlert;
-    public GameObject signedUpAlert;
+    public GameObject alertBox_login;
+    public TextMeshPro alertBox_text_login;
+    public GameObject alertBox_signUp;
+    public TextMeshPro alertBox_text_signUp;
 
-    //Debug Text Test
-    public TextMeshProUGUI debugText; 
+    public TextMeshPro projectCount;
 
     private void Awake()
     {
-
+        GetProjectCount();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
-    }
-
-    //example function for posting data to database
-    private void PostToDatabase()
-    {
-        //string link = restLink + username + ".json";
-        //RestClient.Put(link, new User("test", 5));
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+        DontDestroyOnLoad(gameObject);
     }
 
     private void GetDatabaseIds()
@@ -69,19 +73,33 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
+    public void GetProjectCount()
+    {
+
+        int count = 0;
+        RestClient.Get(restLink + "/projects.json").Then(response =>
+        {
+            fsData projectData = fsJsonParser.Parse(response.Text);
+            Dictionary<string, Project> projects = null;
+            serializer.TryDeserialize(projectData, ref projects);
+            foreach(var project in projects.Values)
+            {
+                count += 1;
+            }
+            projectCount.text = count.ToString();
+        });
+    }
+
     public void GetUserCompanyId(string databaseId)
     {
         RestClient.Get<User>(restLink + "/users/" + databaseId + ".json?auth=" + idToken).Then(response =>
         {
             userCompanyId = response.companyId;
-            Debug.Log(userCompanyId);
-            SaveProject(); //for testing, remove when done
         });
     }
 
     public void SavePhotoData(string imgData)
     {
-        debugText.text = imgData;
 
         if (imgData1 == null)
         {
@@ -137,12 +155,16 @@ public class FirebaseManager : MonoBehaviour
                 string link = restLink + "/users/" + localId + ".json?auth=" + idToken;
                 User newUser = new User(email, username, localId);
                 RestClient.Put(link, newUser);
-                alertBox.SetActive(true);
-                signedUpAlert.SetActive(true);
+
+                alertBox_signUp.SetActive(true);
+                alertBox_text_signUp.text = "Signed up account successfully!";
+                menuManager.LoggedInAccount();
             }
        ).Catch(error =>
        {
            Debug.Log(error);
+           alertBox_signUp.SetActive(true);
+           alertBox_text_signUp.text = error.ToString();
        });
     }
 
@@ -156,14 +178,16 @@ public class FirebaseManager : MonoBehaviour
                 idToken = response.idToken;
                 localId = response.localId;
                 GetUserCompanyId(localId);
-                alertBox.SetActive(true);
-                loggedInAlert.SetActive(true);
+
+                alertBox_login.SetActive(true);
+                alertBox_text_login.text = "Logged in successfully!";
+                menuManager.LoggedInAccount();
 
             }).Catch(error =>
             {
                 Debug.Log(error);
+                alertBox_login.SetActive(true);
+                alertBox_text_login.text = error.ToString();
             });
-
     }
-
 }

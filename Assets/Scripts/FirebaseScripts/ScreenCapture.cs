@@ -9,16 +9,10 @@ public class ScreenCapture : MonoBehaviour
 {
 
     public FirebaseManager firebaseManager;
-    public TextMeshProUGUI debugText;
+    public TextMeshPro debugText;
 
     private PhotoCapture photoCaptureObject = null;
-    private CameraParameters camera;
     public Texture2D targetTexture = null;
-
-    private void Awake()
-    {
-        PhotoCapture.CreateAsync(true, OnPhotoCaptureCreated); //creates photo capture object on app start
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -44,17 +38,20 @@ public class ScreenCapture : MonoBehaviour
         photoCaptureObject = captureObject;
 
         Resolution cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending((res) => res.width * res.height).First();
-
+        CameraParameters camera = new CameraParameters();
         camera.hologramOpacity = 0.0f;
         camera.cameraResolutionWidth = cameraResolution.width;
         camera.cameraResolutionHeight = cameraResolution.height;
         camera.pixelFormat = CapturePixelFormat.BGRA32;
+
+        debugText.text = "Creating Camera";
+        photoCaptureObject.StartPhotoModeAsync(camera, OnPhotoModeStarted);
     }
 
     public void TakePhoto() //When button is pressed, it activates camera mode and passes in camera settings which will then take a photo
     {
         debugText.text = "Button Pressed!";
-        photoCaptureObject.StartPhotoModeAsync(camera, OnPhotoModeStarted);
+        PhotoCapture.CreateAsync(true, OnPhotoCaptureCreated); //creates photo capture object on app start
     }
 
     private void OnPhotoModeStarted(PhotoCapture.PhotoCaptureResult result) //checks to see if photocapture mode started successfully
@@ -62,6 +59,7 @@ public class ScreenCapture : MonoBehaviour
         if (result.success) //if started, runs function to take a photo
         {
             photoCaptureObject.TakePhotoAsync(OnCapturedPhotoToMemory); //takes photo
+            debugText.text = "Started Camera!";
         }
         else
         {
@@ -72,6 +70,7 @@ public class ScreenCapture : MonoBehaviour
 
     void OnCapturedPhotoToMemory(PhotoCapture.PhotoCaptureResult result, PhotoCaptureFrame photoCaptureFrame) //function gets photocapture result to convert to texture
     {
+        debugText.text = "Running Captured Photo to memory";
         if (result.success)
         {
             debugText.text = "Took photo success!";
@@ -85,6 +84,9 @@ public class ScreenCapture : MonoBehaviour
             string imgData = ConvertToBase64(targetTexture);
             firebaseManager.SavePhotoData(imgData); //saves img into firebaseManager list for upload when saving data
 
+        } else
+        {
+            debugText.text = "Unable to take photo!";
         }
         // Stops Camera after image is taken
         photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode); 

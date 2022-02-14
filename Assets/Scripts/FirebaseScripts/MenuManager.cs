@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
@@ -38,8 +39,8 @@ public class MenuManager : MonoBehaviour
         firebaseManager.SignInAccount(emailInput.text, passwordInput.text);
     }
 
-    public void TakeScreenshot()
+    public void LoggedInAccount()
     {
-        Debug.Log("Took Screenshot!");
+        SceneManager.LoadScene("MRTK");
     }
 }
