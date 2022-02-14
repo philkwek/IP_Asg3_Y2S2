@@ -8,20 +8,13 @@ using TMPro;
 
 public class NewScreenCapture : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        PhotoCapture.CreateAsync(false, OnPhotoCaptureCreated);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private PhotoCapture photoCaptureObject = null;
     public TextMeshProUGUI debugText;
+    // Start is called before the first frame update
+    public void StartCap()
+    {
+        PhotoCapture.CreateAsync(true, OnPhotoCaptureCreated);
+    }
 
     void OnPhotoCaptureCreated(PhotoCapture captureObject)
     {
@@ -37,22 +30,22 @@ public class NewScreenCapture : MonoBehaviour
 
         captureObject.StartPhotoModeAsync(c, OnPhotoModeStarted);
     }
-    void OnStoppedPhotoMode(PhotoCapture.PhotoCaptureResult result)
-    {
-        photoCaptureObject.Dispose();
-        photoCaptureObject = null;
-    }
-
     private void OnPhotoModeStarted(PhotoCapture.PhotoCaptureResult result)
     {
         if (result.success)
         {
+            debugText.text = "Photo mode started, taking picture";
             photoCaptureObject.TakePhotoAsync(OnCapturedPhotoToMemory);
         }
         else
         {
             Debug.LogError("Unable to start photo mode!");
         }
+    }
+    void OnStoppedPhotoMode(PhotoCapture.PhotoCaptureResult result)
+    {
+        photoCaptureObject.Dispose();
+        photoCaptureObject = null;
     }
 
     void OnCapturedPhotoToMemory(PhotoCapture.PhotoCaptureResult result, PhotoCaptureFrame photoCaptureFrame)
