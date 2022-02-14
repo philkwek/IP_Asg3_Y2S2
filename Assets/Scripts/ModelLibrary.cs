@@ -5,10 +5,13 @@ using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
 using Microsoft.MixedReality.Toolkit.Input;
+using Microsoft.MixedReality.Toolkit.Utilities;
+
 
 public class ModelLibrary : MonoBehaviour
 {
     public GameObject[] toDisableMenu;
+    public BaseObjectCollection furnitureCollectScript;
 
     private void Start()
     {
@@ -21,6 +24,11 @@ public class ModelLibrary : MonoBehaviour
     public void ToggleMenu(GameObject menu)
     {
         menu.SetActive(!menu.activeInHierarchy);
+    }
+    
+    public void TriggerCollection()
+    {
+        furnitureCollectScript.UpdateCollection();
     }
 
     /// <summary>

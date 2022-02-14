@@ -25,6 +25,9 @@ public class Manager : MonoBehaviour
     public GameObject animationPlayButton;
     public BaseObjectCollection collectionScript;
 
+    [Header("Materials")]
+    public Material[] dysonFan;
+
 
     [Header("Configuation")]
     public RotationHandlesConfiguration rotationConfig;
@@ -151,7 +154,7 @@ public class Manager : MonoBehaviour
         Animator objectAnimator = objectInReference.GetComponent<Animator>();
         if(objectAnimator != null)
         {
-            objectAnimator.Play("Chair");
+            objectAnimator.SetTrigger("Change");
         }
     }
     public void UpdateCollection()

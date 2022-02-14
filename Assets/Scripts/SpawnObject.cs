@@ -53,7 +53,20 @@ public class SpawnObject : MonoBehaviour
         //set it mauanally
         spawnedObject.GetComponent<TapToPlace>().SurfaceNormalOffset = spawnedObject.GetComponent<BoxCollider>().size.y/2;
 
+        SetMaterial(objectToSpawn, spawnedObject);
 
         managerScript.AddList(spawnedObject);
+    }
+
+    public void SetMaterial(GameObject prefab, GameObject spawnedObject)
+    {
+        string[] dysonFan = { "Dyson Fan 1", "Dyson Fan 2", "Dyson Fan 3" };
+        for (int i = 0; i < dysonFan.Length; i++)
+        {
+            if (dysonFan[i] == prefab.name)
+            {
+                spawnedObject.GetComponent<ObjectMaterials>().materials = managerScript.dysonFan;
+            }
+        }
     }
 }
