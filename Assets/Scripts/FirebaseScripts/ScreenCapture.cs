@@ -13,6 +13,7 @@ public class ScreenCapture : MonoBehaviour
 
     private PhotoCapture photoCaptureObject = null;
     private CameraParameters camera;
+    public Texture2D targetTexture = null;
 
     private void Awake()
     {
@@ -58,11 +59,9 @@ public class ScreenCapture : MonoBehaviour
 
     private void OnPhotoModeStarted(PhotoCapture.PhotoCaptureResult result) //checks to see if photocapture mode started successfully
     {
-        debugText.text = "Photo Mode started!";
         if (result.success) //if started, runs function to take a photo
         {
             photoCaptureObject.TakePhotoAsync(OnCapturedPhotoToMemory); //takes photo
-            debugText.text = "Took photo!";
         }
         else
         {
@@ -78,12 +77,12 @@ public class ScreenCapture : MonoBehaviour
             debugText.text = "Took photo success!";
             // Create our Texture2D for use and set the correct resolution
             Resolution cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending((res) => res.width * res.height).First();
-            Texture2D texture = new Texture2D(cameraResolution.width, cameraResolution.height);
+            targetTexture = new Texture2D(cameraResolution.width, cameraResolution.height);
             // Copy the raw image data into our target texture
-            photoCaptureFrame.UploadImageDataToTexture(texture);
-
+            photoCaptureFrame.UploadImageDataToTexture(targetTexture);
+            debugText.text = "Save photo success";
             //Converts texture into base64 string data
-            string imgData = ConvertToBase64(texture);
+            string imgData = ConvertToBase64(targetTexture);
             firebaseManager.SavePhotoData(imgData); //saves img into firebaseManager list for upload when saving data
 
         }
