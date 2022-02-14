@@ -77,6 +77,14 @@ public class Manager : MonoBehaviour
 
     }
 
+    public void DestroyAllObject()
+    {
+        for (int i = 0; i < objectInScene.Count; i++)
+        {
+            Destroy(objectInScene[i]);
+        }
+    }
+
     public void Rotate()
     {
         Vector3 objectRotation = objectInReference.transform.eulerAngles;
@@ -157,6 +165,7 @@ public class Manager : MonoBehaviour
             objectAnimator.SetTrigger("Change");
         }
     }
+
     public void UpdateCollection()
     {
         collectionScript.UpdateCollection();

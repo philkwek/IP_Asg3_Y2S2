@@ -13,12 +13,14 @@ public class NewScreenCapture : MonoBehaviour
     // Start is called before the first frame update
     public void StartCap()
     {
+        debugText.text = "button pressed";
         PhotoCapture.CreateAsync(true, OnPhotoCaptureCreated);
     }
 
     void OnPhotoCaptureCreated(PhotoCapture captureObject)
     {
         photoCaptureObject = captureObject;
+        debugText.text = "photocapture object created";
 
         Resolution cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending((res) => res.width * res.height).First();
 
@@ -39,6 +41,7 @@ public class NewScreenCapture : MonoBehaviour
         }
         else
         {
+            debugText.text = "photo mode unable to start";
             Debug.LogError("Unable to start photo mode!");
         }
     }
