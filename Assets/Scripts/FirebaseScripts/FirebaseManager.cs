@@ -8,13 +8,14 @@ using FullSerializer;
 using System;
 using System.IO;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class FirebaseManager : MonoBehaviour
 {
 
     public static FirebaseManager instance;
     public MenuManager menuManager;
+    public Manager objManager;
 
     private string restLink = "https://ip-asg3-y2s2-default-rtdb.firebaseio.com";
     private string AuthKey = "AIzaSyB4iLqQhetQzvpCJIhczEZrRlF3daOsXJI"; //api key for firebase project 
@@ -41,14 +42,11 @@ public class FirebaseManager : MonoBehaviour
 
     public TextMeshPro projectCount;
 
-    private void Awake()
-    {
-        GetProjectCount();
-    }
-
     // Start is called before the first frame update
     void Start()
     {
+        GetProjectCount();
+
         if (instance != null)
         {
             Destroy(gameObject);
@@ -58,6 +56,12 @@ public class FirebaseManager : MonoBehaviour
             instance = this;
         }
         DontDestroyOnLoad(gameObject);
+
+        if (SceneManager.GetActiveScene().name == "MRTK" && objManager == null)
+        {
+            GameObject obj = GameObject.Find("Manager");
+            objManager = obj.GetComponent<Manager>();
+        }
     }
 
     public void GetProfile()
@@ -139,7 +143,15 @@ public class FirebaseManager : MonoBehaviour
         int companyId = 0;
         string[] pictures = {imgData1, imgData2, imgData3}; //converts imagedata list into an array
 
-        string[] furnitureUsed = { "chair", "table" }; //get furniture list
+        //gets list of all currently spawn objects in the scene
+        GameObject[] furnitureUsedObj = objManager.objectInScene.ToArray();
+        List<String> furnitureUsedList = new List<String>();
+
+        for (int i = 0; i< furnitureUsedObj.Length; i++)
+        {
+            furnitureUsedList.Add(furnitureUsedObj[i].name);
+        }
+        string[] furnitureUsed = furnitureUsedList.ToArray(); //converts list to array for uploading of data
         
         //creates json for upload
         Project newProject = new Project(companyId, creator, dateCreated, furnitureUsed, houseType, projectName, roomNumber, pictures);

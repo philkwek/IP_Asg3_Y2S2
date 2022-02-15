@@ -25,11 +25,6 @@ public class ModelLibrary : MonoBehaviour
     {
         menu.SetActive(!menu.activeInHierarchy);
     }
-    
-    public void TriggerCollection()
-    {
-        furnitureCollectScript.UpdateCollection();
-    }
 
     /// <summary>
     /// Used to trigger script activation on button pressed

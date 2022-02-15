@@ -7,25 +7,27 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pet Furniture Trimsheet_Pet_Furniture_Trimsheet_BaseColor.1002
+  m_Name: Arabic Lantern Trimsheet 1
   m_Shader: {fileID: 4800000, guid: 5bdea20278144b11916d77503ba1467a, type: 3}
-  m_ShaderKeywords: _DIRECTIONAL_LIGHT _GLOSSYREFLECTIONS_OFF _HOVER_LIGHT _SPECULAR_HIGHLIGHTS
+  m_ShaderKeywords: _DIRECTIONAL_LIGHT _GLOSSYREFLECTIONS_OFF _HOVER_LIGHT _METALLICGLOSSMAP
+    _METALLICSPECGLOSSMAP _NORMALMAP _NORMAL_MAP _OCCLUSIONMAP _SPECULAR_HIGHLIGHTS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2000
   stringTagMap:
     RenderType: Opaque
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 1ed26c15f09f1ba48b820bfad2e4893e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 85ba7a41b8484e44ab96d18a23dedcd4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: c60e62014a8b36f409b15617864fbb03, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ChannelMap:
@@ -53,19 +55,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 85ba7a41b8484e44ab96d18a23dedcd4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 4d731a6e1abc38a47b8a1e4382053016, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: c60e62014a8b36f409b15617864fbb03, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: b551536f55542c34a98aeaa6bb0e7579, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -106,7 +108,7 @@ Material:
     - _EnableEmission: 0
     - _EnableHoverColorOverride: 0
     - _EnableLocalSpaceTriplanarMapping: 0
-    - _EnableNormalMap: 0
+    - _EnableNormalMap: 1
     - _EnableProximityLightColorOverride: 0
     - _EnableSSAA: 0
     - _EnableTriplanarMapping: 0
@@ -161,7 +163,7 @@ Material:
     - _StencilComparison: 0
     - _StencilOperation: 0
     - _StencilReference: 0
-    - _Surface: 0
+    - _Surface: 1
     - _TriplanarMappingBlendSharpness: 4
     - _UVSec: 0
     - _VertexColors: 0
@@ -191,7 +193,7 @@ Material:
     - _RoundCornersRadius: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &2427423810574402772
+--- !u!114 &5002385537650405616
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
