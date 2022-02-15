@@ -6918,7 +6918,7 @@ MonoBehaviour:
   lifetime: 0
   referenceDirection: 1
   minDistance: 0.3
-  maxDistance: 0.6
+  maxDistance: 1
   minViewDegrees: 0
   maxViewDegrees: 20
   aspectV: 1
@@ -17069,7 +17069,7 @@ MonoBehaviour:
   lifetime: 0
   referenceDirection: 1
   minDistance: 0.3
-  maxDistance: 0.6
+  maxDistance: 1
   minViewDegrees: 0
   maxViewDegrees: 20
   aspectV: 1
@@ -30801,7 +30801,7 @@ MonoBehaviour:
   lifetime: 0
   referenceDirection: 1
   minDistance: 0.3
-  maxDistance: 0.6
+  maxDistance: 1
   minViewDegrees: 0
   maxViewDegrees: 20
   aspectV: 1
