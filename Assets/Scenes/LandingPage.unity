@@ -5768,7 +5768,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358640296}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0358, y: 0.0019, z: 0}
+  m_LocalPosition: {x: 0.0358, y: 0.0019, z: 0.0128}
   m_LocalScale: {x: 0.16, y: 0.0847542, z: 0.010599999}
   m_Children: []
   m_Father: {fileID: 909284762}
@@ -12002,7 +12002,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1233534568}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: CreateAccount
+        m_MethodName: SignInAccount
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
