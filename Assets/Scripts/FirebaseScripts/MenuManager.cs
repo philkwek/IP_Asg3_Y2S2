@@ -35,7 +35,10 @@ public class MenuManager : MonoBehaviour
         if (firebaseManager == null)
         {
             GameObject firebase = GameObject.Find("FirebaseManager");
-            firebaseManager = firebase.GetComponent<FirebaseManager>();
+            if (firebase != null)
+            {
+                firebaseManager = firebase.GetComponent<FirebaseManager>();
+            }
         }
     }
 

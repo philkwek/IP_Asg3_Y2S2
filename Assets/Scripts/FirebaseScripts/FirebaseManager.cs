@@ -4,11 +4,11 @@ using Proyecto26;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using TMPro;
-using FullSerializer;
 using System;
 using System.IO;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Newtonsoft.Json;
 
 public class FirebaseManager : MonoBehaviour
 {
@@ -18,7 +18,7 @@ public class FirebaseManager : MonoBehaviour
     public Manager objManager;
 
     private string restLink = "https://ip-asg3-y2s2-default-rtdb.firebaseio.com";
-    private string AuthKey = "AIzaSyB4iLqQhetQzvpCJIhczEZrRlF3daOsXJI"; //api key for firebase project 
+    private string authKey = "AIzaSyB4iLqQhetQzvpCJIhczEZrRlF3daOsXJI"; //api key for firebase project 
 
     //account references
     public string idToken; //used for authenticating pushes to db
@@ -26,8 +26,6 @@ public class FirebaseManager : MonoBehaviour
     public string username;
     public static int userCompanyId = 0;
     public string companyName;
-
-    public static fsSerializer serializer = new fsSerializer();
 
     //Image data reference
     public string imgData1;
@@ -64,23 +62,14 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    public void GetProfile()
+    public void GetProfile(string userId)
     {
-        RestClient.Get(restLink + "/users.json?auth=" + idToken).Then(response =>
+        RestClient.Get(restLink + "/users/" + userId + ".json?auth=" + idToken).Then(response =>
         {
-            fsData userData = fsJsonParser.Parse(response.Text); //converts text into json
-            Dictionary<string, User> users = null;
-            serializer.TryDeserialize(userData, ref users); //tries to translate json into the declared user array
-            foreach (var user in users.Values)
-            {
-                if (user.databaseId == localId)
-                {
-                    username = user.username;
-                    userCompanyId = user.companyId;
-                    GetCompanyName(userCompanyId);
-                }
-                Debug.Log(user.username);
-            }
+            User user = JsonUtility.FromJson<User>(response.Text);
+            username = user.username;
+            userCompanyId = user.companyId;
+            GetCompanyName(userCompanyId);
         });
     }
 
@@ -88,33 +77,24 @@ public class FirebaseManager : MonoBehaviour
     {
         RestClient.Get(restLink + "/companys/" + companyId + ".json?auth=" + idToken).Then(response =>
         {
-            fsData companyData = fsJsonParser.Parse(response.Text); //converts text into json
-            Dictionary<string, Company> company = null;
-            serializer.TryDeserialize(companyData, ref company); //tries to translate json into the declared user array
-            foreach (var data in company.Values)
-            {
-                if (data.companyId == userCompanyId)
-                {
-                    companyName = data.companyName;
-                }
-            }
+            Company company = JsonUtility.FromJson<Company>(response.Text);
+            companyName = company.companyName;
         });
     }
 
     public void GetProjectCount()
     {
-
         int count = 0;
+        
         RestClient.Get(restLink + "/projects.json").Then(response =>
         {
-            fsData projectData = fsJsonParser.Parse(response.Text);
-            Dictionary<string, Project> projects = null;
-            serializer.TryDeserialize(projectData, ref projects);
-            foreach(var project in projects.Values)
-            {
-                count += 1;
-            }
-            projectCount.text = count.ToString();
+            var allProjectData = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Text);
+            projectCount.text = allProjectData.Count.ToString();
+
+        }).Catch(error =>
+        {
+            Debug.Log(error);
+            projectCount.text = error.ToString();
         });
     }
 
@@ -167,8 +147,9 @@ public class FirebaseManager : MonoBehaviour
     //function for creating account with firebase
     public void CreateAccount(string email, string username, string password)
     {
+
         string userData = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"returnSecureToken\":true}";
-        RestClient.Post<SignResponse>("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + AuthKey, userData).Then( //then gets the response from Firebase on post entry
+        RestClient.Post<SignResponse>("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + authKey, userData).Then( //then gets the response from Firebase on post entry
             response =>
             {
                 idToken = response.idToken;
@@ -181,6 +162,7 @@ public class FirebaseManager : MonoBehaviour
 
                 alertBox_signUp.SetActive(true);
                 alertBox_text_signUp.text = "Signed up account successfully!";
+                GetProfile(localId);
                 menuManager.LoggedInAccount();
             }
        ).Catch(error =>
@@ -194,13 +176,15 @@ public class FirebaseManager : MonoBehaviour
     //function for signing in user and getting their profile data
     public void SignInAccount(string email, string password)
     {
+        Debug.Log(email + "/n" + password);
         string userData = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"returnSecureToken\":true}";
-        RestClient.Post<SignResponse>("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + AuthKey, userData).Then(
+        Debug.Log(userData);
+        RestClient.Post<SignResponse>("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + authKey, userData).Then(
             response =>
             {
                 idToken = response.idToken;
                 localId = response.localId;
-                GetProfile();
+                GetProfile(localId);
 
                 alertBox_login.SetActive(true);
                 alertBox_text_login.text = "Logged in successfully!";
